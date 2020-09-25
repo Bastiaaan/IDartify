@@ -1,0 +1,6 @@
+
+Each class needs to display its properties and those properties need to contain the original property types.
+
+- each dataTable has an Annotation of @Table(). So has the properties with a type of @DataColumn('name', _type, [nullOrNot]).
+
+- Whenever two @Table() classes conain a List object with an @Table type of each other, group them. In each group each sequence 

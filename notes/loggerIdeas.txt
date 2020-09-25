@@ -1,0 +1,5 @@
+
+every data transaction requires a logger to registrate and write their actions to maintain all data. 
+This is also very convenient in the future in terms of tracing bugs (you can find code easier). 
+
+This logger needs to write the exception (in Dart Error) type and its file of origin has to be writen too.

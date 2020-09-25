@@ -1,0 +1,2 @@
+Whenever the DataTable<Model> is initialized, the data must be loaded and imported into the initialized object.
+
