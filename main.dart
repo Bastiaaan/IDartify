@@ -1,7 +1,10 @@
 
 import 'package:cli/src/context.dart';
+import 'package:cli/src/db/TableManager.dart';
+import 'package:cli/dbModels/Customer.dart';
 
 Future main(List<String> arguments) async {
-  var customer = context.vendors.take(2);
-  print(customer.elementAt(1).id);
+    var customerTable = context.customers;
+    //await customerTable.tableExists();
+    //context.customers.orderBy((element) => element.name);
 }

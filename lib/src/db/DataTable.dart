@@ -27,7 +27,8 @@ class DataTable<T extends MotherModel> {
       Reflector.mapPropertyNamesByIndex(T).forEach((element) {
         var publicProperty = Symbol(element);
         var reflected = reflect(record).getField(publicProperty);
-        if(reflected != null) {          
+        if(reflected != null) {   
+            
           json[tableName].addAll({element: reflected.reflectee});       
         }
       });
@@ -156,9 +157,9 @@ class DataTable<T extends MotherModel> {
     }
   }
 
-  bool any(bool Function(T element) test) {
+  bool any(bool Function(T element) expression) {
     for(var element in _listOfTees) {
-      if(test(element)) return true;
+      if(expression(element)) return true;
     }
     return false;
   }
@@ -173,14 +174,25 @@ class DataTable<T extends MotherModel> {
     throw UnimplementedError();
   }
   
-  bool every(bool Function(T element) test) {
+  bool every(bool Function(T element) expression) {
     var amountOfTrues = 0;
     for(var sequence in _listOfTees) {
-      if(test(sequence) != false) amountOfTrues++;
+      if(expression(sequence) != false) amountOfTrues++;
     }
-    print('records added: '+amountOfTrues.toString()+'\nsequences in ${T.toString()}s: ${length}.\n');
 
     return amountOfTrues == length ? true : false;
+  }
+
+  Iterable<T> orderBy(dynamic Function(T element) expression, [bool descending = false]) {    
+    var previousObj;
+    _listOfTees.forEach((element) { 
+      var currentObj = expression(element);
+      if(previousObj != null) {
+        print(currentObj[0] > previousObj[0]);
+      }
+
+      previousObj = currentObj;
+    });
   }
 
   T firstWhere(bool Function(T element) test, {T Function() orElse}) {
@@ -198,10 +210,10 @@ class DataTable<T extends MotherModel> {
   }
   
   // TODO: implement isEmpty
-  bool get isEmpty => throw UnimplementedError();
+  bool get isEmpty => length < 1;
 
   // TODO: implement isNotEmpty
-  bool get isNotEmpty => throw UnimplementedError();
+  bool get isNotEmpty => length > 0;
 
   // TODO: implement iterator
   Iterator<T> get iterator => throw UnimplementedError();
@@ -242,18 +254,23 @@ class DataTable<T extends MotherModel> {
   }
 
   List<T> toList({bool growable = true}) {
-    // TODO: implement toList
-    throw UnimplementedError();
+    return _listOfTees.toList();
   }
 
   Set<T> toSet() {
-    // TODO: implement toSet
-    throw UnimplementedError();
+    var _set = Set();
+    _listOfTees.forEach((element) {
+      _set.add(element);
+    });
+    return _set;
   }
 
-  Iterable<T> where(bool Function(T element) test) {
-    // TODO: implement where
-    throw UnimplementedError();
+  Iterable<T> where(bool Function(T element) test) sync* {
+    for(var sequence in _listOfTees) {
+      if(test(sequence)) {
+        yield sequence;
+      }
+    }
   }
 
   Iterable<T> whereType<T>() {

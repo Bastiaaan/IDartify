@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'dart:mirrors';
 import 'package:cli/dbModels/modelFormers/MotherModel.dart';
 import 'package:cli/src/Reflector.dart';
 import 'package:cli/src/Serializator.dart';
 import 'package:cli/src/context.dart';
+import 'package:cli/src/db/DataContext.dart';
 
 class TableManager<T extends MotherModel> {
   T _model;
@@ -16,7 +18,9 @@ class TableManager<T extends MotherModel> {
   Future<bool> initializeTable() async {
     var initialized = false;
     serializator.toJSON(model);
-    var sqlString = 'CREATE TABLE ${T.toString()}(\n';
+    var sqlString = '''IF NOT EXISTS(SELECT * FROM INFORMATION_SCHEMA.Tables WHERE TABLE_NAME = '${T.toString()}') 
+    BEGIN
+    CREATE TABLE ${T.toString()}(\n''';
     var classProperties = Reflector.mapPropertyTypes<T>();
     
     for(var columnPair in classProperties) { 
@@ -48,13 +52,27 @@ class TableManager<T extends MotherModel> {
       sqlString+=','; 
       }); 
     } 
-    sqlString += ')';
+    sqlString += ') END';
     context.enqueueQuery(sqlString);
     return await true; 
   } 
 
-  Future<bool> alterOneOrMoreTables() async {
+  Future<bool> alterTable() async {
     // TODO: iterating the modelproperties and the db-tables their columns.
     // By noticing any differences in type of existing columns, amount of columns or 
+  }
+
+  Future<bool> tableExists() async {
+    var success = false;
+    var sqlString = '''
+      IF EXISTS(SELECT * FROM INFORMATION_SCHEMA.Tables WHERE TABLE_NAME = '${T.toString()}') 
+      BEGIN 
+        SELECT * FROM ${T.toString()}
+      END''';
+    dataContext.enqueueQuery(sqlString);
+    //if(result != null) {
+      success = true;
+    //}
+    return success;
   }
 }

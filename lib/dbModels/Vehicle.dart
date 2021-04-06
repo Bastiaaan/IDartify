@@ -13,28 +13,25 @@ class Vehicle extends MotherModel {
   //String get name => _name;
   //set name(String input) => input ?? name;
 
-  @DataColumn('vehicleType', int, true)
+  @DataColumn('vehicleType', int)
   int vehicleType;
   //int get vehicleType => _vehicleType;
   //set vehicleType(int input) => input ?? vehicleType;
 
-  @DataColumn('amountOfWheels', int, true)
+  @DataColumn('amountOfWheels', int)
   int amountOfWheels;
   //int get amountOfWheels => _amountOfWheels;
   //set amountOfWheels(int input) => amountOfWheels ?? input;
 
-  @DataColumn('vendorId', int, true)
+  @DataColumn('vendorId', int)
   int vendorId;
   //int get vendorId => _vendorId;
   //set vendorId(int input) => input ?? vendorId;
 
-  @DataColumn('amountOfSales', int, true)
+  @DataColumn('amountOfSales', int, false)
   int amountOfSales;
   //int get amountOfSales => _amountOfSales;
   //set amountOfSales(int input) => input ?? amountOfSales;
 
   List<Mechanicant> maintenancedBy;
 }
-
-//get => _;
-//set ( input) => input ?? ;
