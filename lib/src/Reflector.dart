@@ -17,6 +17,7 @@ class Reflector extends Reflectable {
     typingCapability,    
   );
 
+  // Iterates each property in the reflected Type and sorts it by key:name and value:declared value
   static Map<String, dynamic> mapPropertiesByName(Type type) {
     var reflct = reflect(type).reflectee;
 
@@ -43,7 +44,7 @@ class Reflector extends Reflectable {
       var baseClass = reflectClass(T).superclass;
       // displays the names correct.
       var originalClass = reflectClass(T);
-      var returnObj = List<Map<String, Type>>();
+      var returnObj = <Map<String, Type>>[];
 
       baseClass.declarations.keys.where((element) => element != null).forEach((key) { // Iterating through the baseclass
 

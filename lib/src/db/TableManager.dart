@@ -47,7 +47,9 @@ class TableManager<T extends MotherModel> {
           case Null:
             sqlString += 'INT NULL';
             break;         
-        } 
+        }
+
+        sqlString += 'NOT NULL';
       }
       sqlString+=','; 
       }); 

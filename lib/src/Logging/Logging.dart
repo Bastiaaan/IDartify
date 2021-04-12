@@ -1,7 +1,7 @@
 
 import 'dart:io';
 
-abstract class LoggingInterface {
+abstract class Logging {
 
   void log(String content, FileSystemEntity resource);
 

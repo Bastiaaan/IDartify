@@ -6,7 +6,7 @@ import 'package:dart_mssql/dart_mssql.dart';
 class DataContext {  
 
   final String _host = 'DESKTOP-ROV0CNI';
-  final String _database = 'SQLQueryGenerator';
+  final String _database = 'IDartify';
   final String _user = 'localGuide001';
   final String _pw = 'zkcn4xttbvHaywX6';
 

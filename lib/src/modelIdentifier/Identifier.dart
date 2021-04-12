@@ -1,13 +1,10 @@
 
-import 'dart:io';
+import 'builders/IdentityBuilder.dart';
 
-class Identifier {
+abstract class Identifier {
   
-  void upgrade() {
-    //if(File.fromUri())
-  }
+  void upgrade(IdentityBuilder identityBuilder);
 
-  void downgrade() {
+  void downgrade(IdentityBuilder identityBuilder);
 
-  }
 }
